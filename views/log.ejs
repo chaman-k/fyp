@@ -10,20 +10,50 @@
 
     <title>Log</title>
 
+  
     <!-- Bootstrap -->
-   
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
   </head>
 
-  <body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-          <table class="table-hover">
+  <body class="" style="color:white;font-size: 30px;">
+    <script>
+      function report (filename, currentCategory) {
+
+    const person = prompt("Enter the actual category");
+
+if (person == null || person == "") { // || person !== "infiltration" || person !== "blast" || person !== "normal" || person !== "war") {
+  alert("Invalid category");
+} else {
+  fetch('http://localhost:3000/modify', {
+  method: 'post',
+  headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({'file': filename, 'currentCategory':currentCategory, 'newCategory': person})
+}).then(res => {console.log(res);
+  alert('Modification accepted');
+  });
+}  
+      }
+    </script>
+    <div class="container">
+      <div class="">
+          <table class="table-dark" style="width:100%;">
               <tr>
-                  <td>No.</td>
-                  <td>Threat level</td>
-                  <td>Accuracy</td>
-                  <td>Timestamp</td>
-                  <td>View</td>
+                  <td><b>No.</b></td>
+                  <td><b>Threat level</b></td>
+                  <td><b>Accuracy</b></td>
+                  <td><b>Timestamp</b></td>
+                  <td><b>View</b></td>
+                  <td><b>Report</b></td>
               </tr>
               <% files1.forEach(function(file, index) { %>
                 <tr>
@@ -32,9 +62,22 @@
                         <td><%= file.accuracy %></td>
                         <td><%= file.time %></td>
                         <td><a href="/threat/<%= file.threat_level%>/<%= file.filename %>"><%= file.filename %></td>
+                        <td><button onClick='javascript:report("<%= file.filename %>","<%= file.threat_level %>")'>Report</button</td>
                     </tr>
               <% }); %>
           </table>
           </div>
     </div>
+        <!-- jQuery -->
+        <script src="../vendors/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="../vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="../vendors/nprogress/nprogress.js"></script>
+        
+        <!-- Custom Theme Scripts -->
+        <script src="../build/js/custom.min.js"></script>
     </body>
+    </html>
