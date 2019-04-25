@@ -34,4 +34,8 @@ router.get('/', async function(req, res, next) {
   res.render('index', { files: jsonArray, files1: files1, infiltration: infiltration, blast: blast, normal: normal, war: war });
 });
 
+router.get('/log', (req, res) => {
+  res.render('log');
+});
+
 module.exports = router;
